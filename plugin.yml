@@ -4,3 +4,6 @@ main: com.scarabcoder.spleef.Spleef
 author: Nicholas Harris (ScarabCoder)
 description: Basic spleef minigame, example for GameAPI
 depends: [GameAPI]
+commands:
+  spleef:
+    description: Main spleef command
