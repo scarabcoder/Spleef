@@ -1,0 +1,6 @@
+name: Spleef
+version: 0.1.0 Beta
+main: com.scarabcoder.spleef.Spleef
+author: Nicholas Harris (ScarabCoder)
+description: Basic spleef minigame, example for GameAPI
+depends: [GameAPI]
