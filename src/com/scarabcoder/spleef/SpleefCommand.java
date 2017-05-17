@@ -20,13 +20,25 @@ public class SpleefCommand implements CommandExecutor {
 			GamePlayer player = PlayerManager.getGamePlayer((Player)sender);
 			if(args.length == 2){
 				if(args[0].equalsIgnoreCase("join")){
-					Game game = GameManager.getGame(args[1]);
-					if(game != null){
-						if(game.getRegisteringPlugin().equals(Spleef.getPlugin())){
-							game.addPlayer(player);
+					if(!player.isInGame()){
+						Game game = GameManager.getGame(args[1]);
+						if(game != null){
+							if(game.getRegisteringPlugin().equals(Spleef.getPlugin())){
+								game.addPlayer(player);
+							}
+						}else{
+							sender.sendMessage(ChatColor.RED + "Game not found!");
 						}
 					}else{
-						sender.sendMessage(ChatColor.RED + "Game not found!");
+						sender.sendMessage(ChatColor.RED + "Please leave your current game first!");
+					}
+				}
+			}else if(args.length == 1){
+				if(args[0].equals("leave")){
+					if(player.isInGame()){
+						player.getGame().removePlayer(player);
+					}else{
+						sender.sendMessage(ChatColor.RED + "You're not in a game!");
 					}
 				}
 			}else{

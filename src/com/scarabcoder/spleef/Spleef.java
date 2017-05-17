@@ -37,6 +37,7 @@ public class Spleef extends JavaPlugin {
 		settings.setMaximumPlayers(8);
 		settings.setAutomaticCountdown(true);
 		
+		
 		ArenaSettings arenaSettings = spleefGame.getArena().getArenaSettings();
 		arenaSettings.setAllowChestAccess(false);
 		arenaSettings.setCanBuild(false);
@@ -44,6 +45,10 @@ public class Spleef extends JavaPlugin {
 		arenaSettings.setCanPvP(false);
 		arenaSettings.setAllowPlayerInvincibility(true);
 		arenaSettings.setAllowFireSpread(false);
+		arenaSettings.setAllowDurabilityChange(false);
+		arenaSettings.setKeepInventory(true);
+		arenaSettings.setAllowFoodLevelChange(false);
+		arenaSettings.setAllowMobSpawn(false);
 		
 		spleefGame.addSpawn(new Location(arena.getWorld(), 1199.5, 24, 208.5));
 		spleefGame.addSpawn(new Location(arena.getWorld(), 1199.5, 24, 231.5));
@@ -53,14 +58,7 @@ public class Spleef extends JavaPlugin {
 		
 		spleefGame.setMessagePrefix(ChatColor.WHITE + "[" + ChatColor.AQUA + "Spleef" + ChatColor.WHITE + "]" + ChatColor.RESET);
 		
-		spleefGame.setLoopRunnable(new Runnable(){
-
-			@Override
-			public void run() {
-				
-			}
-			
-		});
+		
 		
 		GameManager.registerGame(spleefGame);
 		

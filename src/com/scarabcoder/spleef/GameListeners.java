@@ -40,11 +40,16 @@ public class GameListeners implements Listener {
 	public void onLeaveArea(PlayerLeaveAreaEvent e){
 		if(e.getPlayer().getGame().getRegisteringPlugin().equals(Spleef.getPlugin())){
 			if(e.getArea().getName().equals("gameArea")){
-				Game game = e.getPlayer().getGame();
-				game.setPlayerMode(GamePlayerType.SPECTATOR, e.getPlayer());
-				e.getPlayer().getOnlinePlayer().teleport(game.getArena().getSpectatorSpawn());
-				e.getPlayer().getOnlinePlayer().getLocation().getWorld().strikeLightning(e.getPlayer().getOnlinePlayer().getLocation());
-				game.sendMessage(ChatColor.GREEN + e.getPlayer().getPlayer().getName() + " " + ChatColor.RED + "died!");
+				if(!e.getPlayer().getGame().getGamePlayerType(e.getPlayer()).equals(GamePlayerType.SPECTATOR)){
+					Game game = e.getPlayer().getGame();
+					game.setPlayerMode(GamePlayerType.SPECTATOR, e.getPlayer());
+					e.getPlayer().getOnlinePlayer().teleport(game.getArena().getSpectatorSpawn());
+					e.getPlayer().getOnlinePlayer().getLocation().getWorld().strikeLightning(e.getPlayer().getOnlinePlayer().getLocation());
+					game.sendMessage(ChatColor.GREEN + e.getPlayer().getPlayer().getName() + " " + ChatColor.RED + "died!");
+					if(game.getGamePlayerByMode(GamePlayerType.PLAYER).size() == 1){
+						
+					}
+				}
 			}
 		}
 	}
