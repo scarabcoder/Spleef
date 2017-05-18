@@ -36,6 +36,9 @@ public class Spleef extends JavaPlugin {
 		settings.setMinimumPlayers(1);
 		settings.setMaximumPlayers(8);
 		settings.setAutomaticCountdown(true);
+		settings.setUsesBungee(true);
+		settings.setLobbyServer("hub");
+		settings.shouldLeavePlayerOnDisconnect(true);
 		
 		
 		ArenaSettings arenaSettings = spleefGame.getArena().getArenaSettings();
@@ -49,6 +52,7 @@ public class Spleef extends JavaPlugin {
 		arenaSettings.setKeepInventory(true);
 		arenaSettings.setAllowFoodLevelChange(false);
 		arenaSettings.setAllowMobSpawn(false);
+		arenaSettings.setAllowBlockDrop(false);
 		
 		spleefGame.addSpawn(new Location(arena.getWorld(), 1199.5, 24, 208.5));
 		spleefGame.addSpawn(new Location(arena.getWorld(), 1199.5, 24, 231.5));
