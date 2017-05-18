@@ -4,15 +4,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -23,6 +26,7 @@ import com.scarabcoder.gameapi.event.PlayerJoinGameEvent;
 import com.scarabcoder.gameapi.event.PlayerLeaveAreaEvent;
 import com.scarabcoder.gameapi.game.Game;
 import com.scarabcoder.gameapi.game.GamePlayer;
+import com.scarabcoder.gameapi.manager.PlayerManager;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -34,7 +38,11 @@ public class GameListeners implements Listener {
 			e.getGame().sendMessage(e.getPlayer().getOnlinePlayer().getDisplayName() + " joined the game!");
 			Player player = e.getPlayer().getOnlinePlayer();
 			player.teleport(e.getGame().getArena().getLobbySpawn());
-			
+			ItemStack shovel = new ItemStack(Material.DIAMOND_SPADE);
+			shovel.addEnchantment(Enchantment.DIG_SPEED, 3);
+			player.getInventory().clear();
+			player.getInventory().setItem(0, shovel);
+			player.updateInventory();
 		}
 	}
 	
@@ -42,6 +50,18 @@ public class GameListeners implements Listener {
 	public void onGameStart(GameStartEvent e){
 		if(e.getGame().getRegisteringPlugin().equals(Spleef.getPlugin())){
 			e.getGame().getArena().getArenaSettings().setCanDestroy(true);
+		}
+	}
+	
+	@EventHandler
+	public void onBlockBreak(BlockBreakEvent e){
+		GamePlayer player = PlayerManager.getGamePlayer(e.getPlayer());
+		if(player.isInGame()){
+			if(player.getGame().getRegisteringPlugin().equals(Spleef.getPlugin())){
+				if(!e.getBlock().getType().equals(Material.SNOW_BLOCK)){
+					e.setCancelled(true);
+				}
+			}
 		}
 	}
 	
@@ -74,7 +94,7 @@ public class GameListeners implements Listener {
 											if(winner.isOnline()){
 												Firework f = (Firework) winner.getOnlinePlayer().getWorld().spawnEntity(winner.getOnlinePlayer().getEyeLocation(), EntityType.FIREWORK);
 												FireworkMeta m = f.getFireworkMeta();
-												m.setPower(2);
+												m.setPower(1);
 												Random r = new Random();
 									            List<Color> colors = (List<Color>) Arrays.asList(Color.AQUA, Color.BLACK, Color.BLUE, Color.FUCHSIA, Color.GRAY, 
 									            		Color.GREEN, Color.LIME, Color.LIME, Color.MAROON, Color.NAVY, Color.OLIVE, 

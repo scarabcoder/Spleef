@@ -25,6 +25,8 @@ public class Spleef extends JavaPlugin {
 		Arena arena = new Arena("Spleef");
 		
 		Game spleefGame = new Game("Spleef", arena, GameStatus.WAITING, this);
+		
+		
 		arena.setLobbySpawn(new Location(arena.getWorld(), 1199.5d, 24, 219.5d));
 		arena.setSpectatorSpawn(new Location(arena.getWorld(), 1198, 37, 219));
 		GameSettings settings = spleefGame.getGameSettings();
@@ -53,6 +55,8 @@ public class Spleef extends JavaPlugin {
 		arenaSettings.setAllowFoodLevelChange(false);
 		arenaSettings.setAllowMobSpawn(false);
 		arenaSettings.setAllowBlockDrop(false);
+		arenaSettings.setAllowItemDrop(false);
+		arenaSettings.setAllowInventoryChange(false);
 		
 		spleefGame.addSpawn(new Location(arena.getWorld(), 1199.5, 24, 208.5));
 		spleefGame.addSpawn(new Location(arena.getWorld(), 1199.5, 24, 231.5));
